@@ -10,17 +10,8 @@
 
 #include "stm32f4xx.h"
 #include "stm32f4_discovery.h"
-
-#define BIT24 0x1000000
-#define BIT26 0x4000000
-#define BIT28 0x10000000
-#define BIT30 0x40000000
-#define BIT12 0x1000		// LED 1
-#define BIT13 0x2000		// LED 2
-#define BIT14 0x4000		// LED 3
-#define BIT15 0x8000 		// LED 4
-
-void delay(uint16_t delay);
+#include "delay.h"
+#include "bits.h"		// No hace falta crear bits.c porque no tiene funciones, solo son definiciones
 
 void main(void) {
 	// CONFIGURACIÓN
@@ -45,14 +36,5 @@ void main(void) {
 		delay(5000);
 		GPIOD->ODR &= ~(BIT14);
 		GPIOD->ODR |= BIT15;
-	}
-}
-
-void delay(uint16_t delay) {
-	uint8_t i = 0;
-	while (delay-- > 0) {
-		for (i = 100; i > 0; i--)
-			asm("nop");
-		// Instrucción en assembler para que el micro no haga nada
 	}
 }
